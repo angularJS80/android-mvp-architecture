@@ -1,3 +1,54 @@
+ActivityModule           : 생성시 엑티비티를 인자로 받고 엑티비티를 제공하고 처리자들(프리젠터) 를 제공한다.  데거 컴포넌트에 이용된다.
+ApplicationModule      : 생성시 어플리케이션을 주입받고 어플리케이션을 제공한다.   데거 컴포넌트에 이용된다.
+ServiceModule           : 생성시 서비스를 주입받는다.   데거 컴포넌트에 이용된다.
+
+
+ApplicationComponent : 데거가 스캔해야 되는 어플리케이션 모듈을을 정의 하고
+                                 주입받아야 되는 어플리케이션을 정의 하여 데거에 이용 되도록 한다.
+
+ActivityComponent      :  데거가 스캔해야 되는 어플리케이션컴포넌트(ApplicationComponent) 과 엑티비티모듈(ActivityModule )를 정의 하고
+                                  주입 받아야 되는 엑티비티를 정의하여 데거에 이용 되도록 한다.
+                                 1개의 모듈에 4개의 제공자가 있고 주입 엑티비티가 4개라면
+                                 아래와 같이 각 엑티비티에서 4개의 기능을 하용하게 될 수 있는건 컴포넌트가 아래와 같은 엑티비티와 기능제공자에 대한
+                                 연결고리를 제공하기 때문이다.
+
+                                  ActivityModuel 기능 제공자1  --> ActivityComponent <-- 사용될 엑티비티 1
+                                  ActivityModuel 기능 제공자2  --> ActivityComponent <-- 사용될 엑티비티 2
+                                  ActivityModuel 기능 제공자3  --> ActivityComponent <-- 사용될 엑티비티 3
+                                  ActivityModuel 기능 제공자4  --> ActivityComponent <-- 사용될 엑티비티 4
+
+                                  ActivityModuel 기능 제공자2  --> ActivityComponent <--  사용될 엑티비티 1
+                                  ActivityModuel 기능 제공자3  --> ActivityComponent <--  사용될 엑티비티 2
+                                  ActivityModuel 기능 제공자4  --> ActivityComponent <--  사용될 엑티비티 3
+                                  ActivityModuel 기능 제공자1  --> ActivityComponent <--  사용될 엑티비티 4
+
+                                  ActivityModuel 기능 제공자3  --> ActivityComponent <--  사용될 엑티비티 1
+                                  ActivityModuel 기능 제공자4  --> ActivityComponent <--  사용될 엑티비티 2
+                                  ActivityModuel 기능 제공자1  --> ActivityComponent <--  사용될 엑티비티 3
+                                  ActivityModuel 기능 제공자2  --> ActivityComponent <--  사용될 엑티비티 4
+
+                                  ActivityModuel 기능 제공자4  --> ActivityComponent <--  사용될 엑티비티 1
+                                  ActivityModuel 기능 제공자1  --> ActivityComponent <--  사용될 엑티비티 2
+                                  ActivityModuel 기능 제공자2  --> ActivityComponent <--  사용될 엑티비티 3
+                                  ActivityModuel 기능 제공자3  --> ActivityComponent <--  사용될 엑티비티 4
+
+ServiceComponent      :  데거가 스캔해야 되는 어플리케이션컴포넌트(ApplicationComponent) 과 서비스 모듈을 정의하고
+                                  주입 받아야 되는 동기화 서비스를 정의 하여 데거에 이용되도록 한다.
+
+이제 데거에 필요한 어플리케이션 / 엑티비티 /
+
+MvApp.java               : 어플리케이션이 onCreate 될때 데거 컴포넌트변수 에
+                               빌더를 통해서   ApplicateionModule 에 정의된 제공자 + MvApp 자체를 인자 값으로 빌드 된다.
+                               이컴포넌트변수는 BaseActivity 에서 사용될 수 있다.
+
+BaseActivity              : 모든 엑티비티가 상속받는 최상위 엑티비티로
+                               베이스엑티비티 onCreate 될때 데거 컴포넌트 변수에
+                               MvApp 에서 제공하는 컴포는트 + ActivityModule 을 인자값으로 빌드 된다.
+
+
+
+
+
 # Android MVP Architecture: Sample App
 [![Mindorks](https://img.shields.io/badge/mindorks-opensource-blue.svg)](https://mindorks.com/open-source-projects)
 [![Mindorks Community](https://img.shields.io/badge/join-community-blue.svg)](https://mindorks.com/join-community)
